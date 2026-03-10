@@ -148,27 +148,17 @@ export function CanvasEditor({ sizePreset, onBranchRequest, loading }: Props) {
           });
           img.scaleToWidth(width);
           img.scaleToHeight(height);
-          canvas.setBackgroundImage(
-            img,
-            () => {
-              img.animate(
-                "opacity",
-                1,
-                {
-                  duration: 600,
-                  onChange: () => canvas.renderAll(),
-                  onComplete: () => {
-                    applyDefaultTextLayout();
-                    resolve();
-                  }
-                }
-              );
-            },
-            {
-              originX: "left",
-              originY: "top"
+          canvas.backgroundImage = img;
+          img.set("opacity", 0);
+          canvas.requestRenderAll();
+          img.animate("opacity", 1, {
+            duration: 600,
+            onChange: () => canvas.requestRenderAll(),
+            onComplete: () => {
+              applyDefaultTextLayout();
+              resolve();
             }
-          );
+          });
         })
         .catch(reject);
     });
@@ -195,24 +185,14 @@ export function CanvasEditor({ sizePreset, onBranchRequest, loading }: Props) {
           });
           img.scaleToWidth(width);
           img.scaleToHeight(height);
-          canvas.setBackgroundImage(
-            img,
-            () => {
-              img.animate(
-                "opacity",
-                1,
-                {
-                  duration: 600,
-                  onChange: () => canvas.renderAll(),
-                  onComplete: () => resolve()
-                }
-              );
-            },
-            {
-              originX: "left",
-              originY: "top"
-            }
-          );
+          canvas.backgroundImage = img;
+          img.set("opacity", 0);
+          canvas.requestRenderAll();
+          img.animate("opacity", 1, {
+            duration: 600,
+            onChange: () => canvas.requestRenderAll(),
+            onComplete: () => resolve()
+          });
         })
         .catch(reject);
     });
@@ -223,7 +203,8 @@ export function CanvasEditor({ sizePreset, onBranchRequest, loading }: Props) {
     if (!canvas) return;
 
     setBackgroundUrl(null);
-    canvas.setBackgroundImage(null, canvas.renderAll.bind(canvas));
+    canvas.backgroundImage = null;
+    canvas.requestRenderAll();
     const objects = canvas.getObjects();
     objects.forEach((obj) => canvas.remove(obj));
     canvas.renderAll();
