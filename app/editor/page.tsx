@@ -78,12 +78,11 @@ export default function EditorPage() {
       if (parsed.fontFamily) setFontFamily(parsed.fontFamily);
       if (parsed.themeId) setTheme(parsed.themeId);
       if (parsed.eventDetails) setEventDetails(parsed.eventDetails);
-      if (parsed.lastGeneration) {
-        setGenerations([parsed.lastGeneration]);
-        setActiveGenerationId(parsed.lastGeneration.id);
-        void callCanvas((handle) =>
-          handle.setBackground(parsed.lastGeneration.imageUrl)
-        );
+      if (parsed?.lastGeneration) {
+        const last = parsed.lastGeneration;
+        setGenerations([last]);
+        setActiveGenerationId(last.id);
+        void callCanvas((handle) => handle.setBackground(last.imageUrl));
       }
     } catch {
       // ignore
