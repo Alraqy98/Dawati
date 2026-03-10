@@ -134,9 +134,8 @@ export function CanvasEditor({ sizePreset, onBranchRequest, loading }: Props) {
     setBackgroundUrl(url);
 
     return new Promise<void>((resolve, reject) => {
-      fabric.Image.fromURL(
-        url,
-        (img) => {
+      fabric.Image.fromURL(url, { crossOrigin: "anonymous" })
+        .then((img) => {
           if (!img) {
             reject(new Error("Failed to load image"));
             return;
@@ -170,9 +169,8 @@ export function CanvasEditor({ sizePreset, onBranchRequest, loading }: Props) {
               originY: "top"
             }
           );
-        },
-        { crossOrigin: "anonymous" }
-      );
+        })
+        .catch(reject);
     });
   };
 
@@ -183,9 +181,8 @@ export function CanvasEditor({ sizePreset, onBranchRequest, loading }: Props) {
     setBackgroundUrl(url);
 
     return new Promise<void>((resolve, reject) => {
-      fabric.Image.fromURL(
-        url,
-        (img) => {
+      fabric.Image.fromURL(url, { crossOrigin: "anonymous" })
+        .then((img) => {
           if (!img) {
             reject(new Error("Failed to load image"));
             return;
@@ -216,9 +213,8 @@ export function CanvasEditor({ sizePreset, onBranchRequest, loading }: Props) {
               originY: "top"
             }
           );
-        },
-        { crossOrigin: "anonymous" }
-      );
+        })
+        .catch(reject);
     });
   };
 
