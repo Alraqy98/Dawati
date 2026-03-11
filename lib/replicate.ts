@@ -20,9 +20,11 @@ export async function generateInvitationBackground({
   width,
   height
 }: GenerateImageParams): Promise<string> {
-  const model =
-    process.env.REPLICATE_SDXL_MODEL ??
+  const defaultModel: `${string}/${string}:${string}` =
     "stability-ai/sdxl-lightning:dc9d0d8e4a9c4f8e8b9b8e96e65e6a85";
+  const model =
+    (process.env.REPLICATE_SDXL_MODEL as `${string}/${string}:${string}` | undefined) ??
+    defaultModel;
 
   const output = (await replicate.run(model, {
     input: {
