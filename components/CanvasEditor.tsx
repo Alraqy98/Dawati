@@ -209,7 +209,7 @@ export function CanvasEditor({ sizePreset, onBranchRequest, loading }: Props) {
     if (!canvas) return;
 
     setBackgroundUrl(null);
-    canvas.backgroundImage = null;
+    canvas.backgroundImage = undefined;
     canvas.requestRenderAll();
     const objects = canvas.getObjects();
     objects.forEach((obj) => canvas.remove(obj));
