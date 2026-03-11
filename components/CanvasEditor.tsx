@@ -151,14 +151,17 @@ export function CanvasEditor({ sizePreset, onBranchRequest, loading }: Props) {
           canvas.backgroundImage = img;
           img.set("opacity", 0);
           canvas.requestRenderAll();
-          img.animate("opacity", 1, {
-            duration: 600,
-            onChange: () => canvas.requestRenderAll(),
-            onComplete: () => {
-              applyDefaultTextLayout();
-              resolve();
+          img.animate(
+            { opacity: 1 },
+            {
+              duration: 600,
+              onChange: () => canvas.requestRenderAll(),
+              onComplete: () => {
+                applyDefaultTextLayout();
+                resolve();
+              }
             }
-          });
+          );
         })
         .catch(reject);
     });
@@ -188,11 +191,14 @@ export function CanvasEditor({ sizePreset, onBranchRequest, loading }: Props) {
           canvas.backgroundImage = img;
           img.set("opacity", 0);
           canvas.requestRenderAll();
-          img.animate("opacity", 1, {
-            duration: 600,
-            onChange: () => canvas.requestRenderAll(),
-            onComplete: () => resolve()
-          });
+          img.animate(
+            { opacity: 1 },
+            {
+              duration: 600,
+              onChange: () => canvas.requestRenderAll(),
+              onComplete: () => resolve()
+            }
+          );
         })
         .catch(reject);
     });
