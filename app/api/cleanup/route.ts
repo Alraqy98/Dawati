@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { cleanupGeneratedImages } from "@/scripts/cleanupGeneratedImages";
+import { cleanupGeneratedImages } from "../../../scripts/cleanupGeneratedImages";
 
 export async function GET(request: Request) {
   const auth = request.headers.get("authorization");
