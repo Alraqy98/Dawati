@@ -1,8 +1,21 @@
 import { NextResponse } from "next/server";
-import { generateInvitationBackground } from "@/lib/replicate";
+import { headers } from "next/headers";
+import { generateImage } from "@/lib/generateImage";
+import { checkRateLimit } from "@/lib/rateLimit";
 
 export async function POST(request: Request) {
   try {
+    const ip =
+      headers().get("x-forwarded-for")?.split(",")[0] ||
+      "anonymous";
+
+    if (!(await checkRateLimit(ip))) {
+      return NextResponse.json(
+        { error: "Too many requests" },
+        { status: 429 }
+      );
+    }
+
     const body = await request.json();
     const { prompt, width, height } = body as {
       prompt: string;
@@ -17,13 +30,16 @@ export async function POST(request: Request) {
       );
     }
 
-    const imageUrl = await generateInvitationBackground({
+    const imageUrl = await generateImage({
       prompt,
       width,
       height
     });
 
-    return NextResponse.json({ imageUrl });
+    return NextResponse.json({
+      imageUrl,
+      image_url: imageUrl
+    });
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error(error);

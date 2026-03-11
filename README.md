@@ -1,6 +1,6 @@
 ## InviteAI MVP
 
-Arabic-focused AI invitation generator built with Next.js 14, TailwindCSS, Supabase, Replicate (SDXL), Fabric.js, and Stripe.
+Arabic-focused AI invitation generator built with Next.js 14, TailwindCSS, Supabase, Google Gemini Image, Fabric.js, and Stripe.
 
 ### Getting started
 
@@ -15,8 +15,7 @@ npm install
 ```bash
 NEXT_PUBLIC_SUPABASE_URL=...
 NEXT_PUBLIC_SUPABASE_ANON_KEY=...
-REPLICATE_API_TOKEN=...
-REPLICATE_SDXL_MODEL=stability-ai/sdxl-lightning:dc9d0d8e4a9c4f8e8b9b8e96e65e6a85
+GOOGLE_API_KEY=...
 NEXT_PUBLIC_STRIPE_PAYMENT_LINK=https://buy.stripe.com/...
 ```
 
