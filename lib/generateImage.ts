@@ -24,14 +24,7 @@ export async function generateImage({
   }
 
   const model = genAI.getGenerativeModel({
-    model: "gemini-2.5-flash-image-preview",
-    generationConfig: {
-      responseModalities: ["IMAGE"],
-      imageConfig: {
-        width,
-        height
-      }
-    }
+    model: "gemini-2.5-flash-image-preview"
   });
 
   const fullPrompt = `
