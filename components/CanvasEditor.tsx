@@ -383,7 +383,7 @@ export function CanvasEditor({ sizePreset, onBranchRequest, loading }: Props) {
         fontFamily: "Cairo"
       });
       canvas.add(watermark);
-      canvas.moveTo(watermark, canvas.getObjects().length - 1);
+      watermark.bringToFront();
       canvas.renderAll();
     }
 
