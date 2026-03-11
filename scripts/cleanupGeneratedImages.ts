@@ -1,17 +1,26 @@
 import "server-only";
 import { createClient } from "@supabase/supabase-js";
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!,
-  { auth: { persistSession: false } }
-);
-
 const BUCKET = "generated-images";
 const MAX_AGE_DAYS = 30;
 const DATE_FOLDER_REGEX = /^\d{4}-\d{2}-\d{2}$/;
 
 export async function cleanupGeneratedImages() {
+  if (
+    !process.env.NEXT_PUBLIC_SUPABASE_URL ||
+    !process.env.SUPABASE_SERVICE_ROLE_KEY
+  ) {
+    // eslint-disable-next-line no-console
+    console.warn("Cleanup skipped: Supabase not configured");
+    return;
+  }
+
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    process.env.SUPABASE_SERVICE_ROLE_KEY,
+    { auth: { persistSession: false } }
+  );
+
   const cutoff = Date.now() - MAX_AGE_DAYS * 24 * 60 * 60 * 1000;
 
   const { data: folders, error } = await supabase.storage
